@@ -13,9 +13,9 @@
 			<img src="img/car-icon.png" alt="Car" class="car-icon">
 		</div>
 		<div class="signup-box">
-			<h2>Customer Sign Up</h2></br>
-			Are you an industry proffessional? <a href = 'professional-signup.php'>Click here</a> to go to professional signup
-			<form action="includes/signup.inc.php" method="post">
+			<h2>Proffessional Sign Up</h2></br>
+			Are you an Customer? <a href = 'signup.php'>Click here</a> to go to Customer signup
+			<form action="includes/professional-signup.inc.php" method="post">
 				<label for="name"><b>Full Name</b></label>
 				<input type="text" name="name" placeholder="Input full name" required></br>
 
@@ -29,7 +29,7 @@
 				<input type="password" name="pwdrepeat" placeholder="Confirm password" required></br>
 
 				<label for="phone"><b>Phone Number</b></label>
-				<input type="text" name="phone" placeholder="Input phone number" required></br></br>
+				<input type="text" name="phone" placeholder="Input phone number" required></br>
 				
 				<label for="phone"><b>Date of Birth</b></label>
 				</br>

@@ -1,39 +1,34 @@
 <?php
 	include_once 'header.php';
-	
-	
 ?>
 	<head>
 		<title>Home Page</title>
 		<link rel="stylesheet" href="css\style.css">
-		
-		
-		
 	</head>
-	<?php
-		if(isset($_SESSION["USER_ID"])){
-			if($_SESSION["TYPE"] === "PROFESSIONAL"){
-				header("location: prof-index.php");
-			}
-		};
-	?>
-	<meta http-equiv="refresh" content="=0;URL=index.php" />
+
 	<body class="main-page">
 		<div class="heading">
 			<h1>Welcome to #companyName#</h1>
 		</div>
-		<!--Content Section-->	
+		<!--Content Section-->
+		<?php
+			if(isset($_SESSION["USER_ID"])){
+				if($_SESSION["TYPE"] === "CUSTOMER"){
+					header("location: index.php");
+				}
+			};
+		?>
 		<div class="content">
 			<div class="row">
 				<div class="column">
 					<div class="card-content">
-						<h4 class="card-title"><b>Membership Options</b></h4>
-						<p>See how much our membership subscription will cost you</p>
+						<h4 class="card-title"><b>Who needs help?</b></h4>
+						<p>See customers in your area that need help</p>
 						<button class="btnMemOpt"> Check Now </button>
 					</div>
 					<div class="card-content">
-						<h4 class="card-title"><b>Make Service Request</b></h4>
-						<p>Make a service request to have our roadside assistants help you</p>
+						<h4 class="card-title"><b>Service history</b></h4>
+						<p>See your service history</p>
 						<button class="btnSrvReq"> Check Now </button>
 					</div>
 				</div>
@@ -44,8 +39,8 @@
 						<button class="btnMngMem"> Check Now </button>
 					</div>
 					<div class="card-content">
-						<h4 class="card-title"><b>View Professionals</b></h4>
-						<p>See how many professionals available in your local area</p>
+						<h4 class="card-title"><b>Reviews</b></h4>
+						<p>See how customers have reviewed your service</p>
 						<button class="btnViewPro"> Check Now </button>
 					</div>
 				</div>

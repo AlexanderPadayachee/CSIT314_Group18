@@ -11,37 +11,35 @@
 		require_once 'functions.inc.php';
 		
 		if(emptyInputSignup($name, $username, $password, $pwdrepeat, $phone) !== false){
-			header("location: ../signup.php?error=emptyinput");
+			header("location: ../professional-signup.php?error=emptyinput");
 			exit();
 		}
 		if(invalidUid($username) !== false){
-			header("location: ../signup.php?error=invalidUid");
+			header("location: ../professional-signup.php?error=invalidUid");
 			exit();
 		}
 		if(pwdMatch($password, $pwdrepeat) !== false){
-			header("location: ../signup.php?error=passMatch");
+			header("location: ../professional-signup.php?error=passMatch");
 			exit();
 		}
 		if(uidExists($conn, $username) !== false){
-			header("location: ../signup.php?error=usernameTaken");
+			header("location: ../professional-signup.php?error=usernameTaken");
 			exit();
 		}
 		
 		if(profExists($conn, $username) !== false){
-			header("location: ../signup.php?error=usernameTaken");
+			header("location: ../professional-signup.php?error=usernameTaken");
 			exit();
 		}
 		
 		
-		
-		
-		createUser($conn, $name, $username, $password, $phone, $dob);
+		createProfessional($conn, $name, $username, $password, $phone, $dob);
 		sleep(2);
 		loginUser($conn, $username, $password);
 		
 		
 	}
 	else{
-		header("location: ../signup.php");
+		header("location: ../professional-signup.php");
 		exit();
 	}

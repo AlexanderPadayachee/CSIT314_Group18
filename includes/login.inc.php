@@ -12,7 +12,6 @@
 		}
 		
 		loginUser($conn, $username, $password);
-		
 	}
 	else{
 		header("location: ../login.php");
