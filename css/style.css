@@ -34,6 +34,11 @@ a{
     color: white;
 }
 
+table{
+	padding: 5px;
+    color: black;
+}
+
 .form{
     border: 2px solid;
     text-align: center;
@@ -104,8 +109,12 @@ button[type=submit]{
     height: 170px;
     margin: 5px 20px 20px 20px;
     padding: 5px;
+	
 }
+.card-content a{
+	color: #696969 !important;
 
+}
 .row{
     display: flex;
     flex-wrap: wrap;
@@ -131,3 +140,5 @@ button[type=submit]{
     margin: 8px 0;
     border: none;
 }
+
+
