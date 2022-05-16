@@ -26,10 +26,11 @@
 		<div class="content">
 			<div class="row">
 				<div class="column">
+					
 					<div class="card-content">
 						<h4 class="card-title"><b>Membership Options</b></h4>
 						<p>See how much our membership subscription will cost you</p>
-						<button class="btnMemOpt"> Check Now </button>
+						<a href = "subscriptions.php" class="forceLink"> Check Now </a>
 					</div>
 					<div class="card-content">
 						<h4 class="card-title"><b>Make Service Request</b></h4>
