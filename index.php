@@ -35,14 +35,14 @@
 					<div class="card-content">
 						<h4 class="card-title"><b>Make Service Request</b></h4>
 						<p>Make a service request to have our roadside assistants help you</p>
-						<button class="btnSrvReq"> Check Now </button>
+						<button class="btnMngMem"> Check Now </button>
 					</div>
 				</div>
 				<div class="column">
 					<div class="card-content">
 						<h4 class="card-title"><b>Manage Membership</b></h4>
 						<p>Manage your membership</p>
-						<button class="btnMngMem"> Check Now </button>
+						<a href = "profile-update.php" class="forceLink"> Check Now </a>
 					</div>
 					<div class="card-content">
 						<h4 class="card-title"><b>View Professionals</b></h4>

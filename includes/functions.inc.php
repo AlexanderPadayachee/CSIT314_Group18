@@ -139,6 +139,36 @@
 		return $result;
 	}
 	
+	function carCheck($conn, $username){
+		$sql = "SELECT * FROM customer JOIN motor on customer.MOTOR_NUM = motor.NUM_PLATE WHERE USERNAME = ?;";
+		
+		$stmt = mysqli_stmt_init($conn);
+		
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../index.php?error=sqlStatementFailed");
+		}
+		
+		mysqli_stmt_bind_param($stmt, "s", $username);
+		mysqli_stmt_execute($stmt);
+		
+		$resultDat = mysqli_stmt_get_result($stmt);
+		
+		if($row = mysqli_fetch_assoc($resultDat)){
+			
+			$_SESSION["CAR_MODEL"] = $row["MODEL"];
+			
+		}
+		else{
+			$_SESSION["CAR_MODEL"] = "";
+		}
+		
+		
+		
+		mysqli_stmt_close($stmt);
+		
+		
+	}
+	
 	function MembershipCheck($conn, $username){
 		$sql = "SELECT * FROM customer JOIN membership on customer.MEMBER_ID = membership.MEMBERSHIP_ID WHERE USERNAME = ?;";
 		
@@ -155,12 +185,14 @@
 		
 		if($row = mysqli_fetch_assoc($resultDat)){
 			
+			$_SESSION["MEMBER_ID"] = $row["MEMBER_ID"];
 			$_SESSION["ANNUAL_FEE"] = $row["ANNUAL_FEE"];
 			$_SESSION["EXPIRY_DATE"] = $row["EXPIRY_DATE"];
 			$_SESSION["NUM_OF_USE"] = $row["NUM_OF_USE"];
 			
 		}
 		else{
+			$_SESSION["MEMBER_ID"] = "";
 			$_SESSION["ANNUAL_FEE"] = "";
 			$_SESSION["EXPIRY_DATE"] = "";
 			$_SESSION["NUM_OF_USE"] = "";
@@ -171,6 +203,7 @@
 		mysqli_stmt_close($stmt);
 		
 	}
+	
 	
 	function loginUser($conn, $username, $password){
 		$uidExists = uidExists($conn, $username);

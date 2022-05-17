@@ -28,7 +28,7 @@
 		<td>Full Name: </td>
 		<td>
 		<?php 
-		echo($_SESSION["NAME"])
+		echo($_SESSION["NAME"]);
 		?>
 		</td>
 	</tr>
@@ -36,7 +36,7 @@
 		<td>email: </td>
 		<td>
 		<?php 
-		echo($_SESSION["USERNAME"])
+		echo($_SESSION["USERNAME"]);
 		?>
 		</td>
 	</tr>
@@ -44,7 +44,7 @@
 		<td>DOB: </td>
 		<td>
 		<?php 
-		echo($_SESSION["DOB"])
+		echo($_SESSION["DOB"]);
 		?>
 		</td>
 	</tr>
@@ -52,7 +52,7 @@
 		<td>PHONE: </td>
 		<td>
 		<?php 
-		echo($_SESSION["PHONE"])
+		echo($_SESSION["PHONE"]);
 		?>
 		</td>
 	</tr>
