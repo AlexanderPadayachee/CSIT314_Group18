@@ -26,9 +26,10 @@
 						<a href = "index.php">Home</a>
 						<?php
 							if(isset($_SESSION["USER_ID"])){
-								echo"<a href = 'profile-page.php'>Profile</a></li>";
-								echo"<a href = 'request.php'>Request Service</a></li>";
-								echo"<a href = 'includes/logout.inc.php'>Log out</a></li>";
+								echo"<a href = 'profile-page.php'>  Profile  </a></li>";
+								echo"<a href = 'membership-update.php'>  Update Membership  </a></li>";
+								echo"<a href = 'request.php'>  Request Service  </a></li>";
+								echo"<a href = 'includes/logout.inc.php'>  Log out  </a></li>";
 							}
 							else{ 
 								echo"<a href = 'signup.php'>Sign Up</a></li>";
