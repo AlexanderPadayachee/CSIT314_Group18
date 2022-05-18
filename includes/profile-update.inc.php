@@ -14,7 +14,7 @@
 		
 		updateUser($conn,$username, $phone, $address, $license, $model);
 		
-		
+		header("location: ../index.php");
 		
 	}
 	else{

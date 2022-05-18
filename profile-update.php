@@ -56,7 +56,7 @@
 					
 					echo("<label for='phone'><b>Phone Number</b></label>");
 					echo("<input type='text' name='phone' value='" . $_SESSION["PHONE"] . "' required>");
-					 
+					
 					if($_SESSION["TYPE"] === "CUSTOMER"){
 						echo("<label for='address'><b>Address</b></label>");
 						echo("<input type='text' name='address' value='" . $_SESSION["ADDRESS"] . "' required>");

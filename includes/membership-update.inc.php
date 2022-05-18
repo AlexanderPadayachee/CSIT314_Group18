@@ -1,16 +1,14 @@
 <?php
 	if(isset($_POST["submit"])){
 		$username = $_POST["username"];
-		$password = $_POST["password"];
+		$memberType = $_POST["memberType"];
+		$uses = $_POST["uses"];
 		
 		require_once 'dbh.inc.php';
 		require_once 'functions.inc.php';
 		
-		
-		header("location: ../membership-update.php?error=emptyinput"); #### comment this out later
-		exit();
-		
-		#loginUser($conn, $username, $password);
+		updateMembeship($conn, $username, $memberType, $uses);
+		#header("location: ../index.php");
 	}
 	else{
 		header("location: ../login.php");
