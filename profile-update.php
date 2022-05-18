@@ -52,6 +52,8 @@
 			<form action="includes/profile-update.inc.php" method="post">
 				<div class="container">
 					<?php
+					echo("<input readonly name='username' value = '" . $_SESSION["USERNAME"] . "'>");
+					
 					echo("<label for='phone'><b>Phone Number</b></label>");
 					echo("<input type='text' name='phone' value='" . $_SESSION["PHONE"] . "' required>");
 					 
@@ -60,12 +62,10 @@
 						echo("<input type='text' name='address' value='" . $_SESSION["ADDRESS"] . "' required>");
 						
 						echo("<label for='license'><b>License plate</b></label>");
-						echo("<input type='text' name='license' value='" . $_SESSION["MOTOR_NUM"] . "' required>");
+						echo("<input type='text' name='license' value='" . $_SESSION["LICENSE"] . "' required>");
 						
 						echo("<label for='model'><b>Car Model</b></label>");
-						echo("<input type='text' name='model' value='" . $_SESSION["CAR_MODEL"] . "' required>");
-						
-						
+						echo("<input type='text' name='model' value='" . $_SESSION["MODEL"] . "' required>");
 					}
 					
 					

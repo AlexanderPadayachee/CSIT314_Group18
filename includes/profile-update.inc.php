@@ -1,18 +1,24 @@
 <?php
 	if(isset($_POST["submit"])){
 		$username = $_POST["username"];
-		$password = $_POST["password"];
+		
+		$phone = $_POST["phone"];
+		$address = $_POST["address"];
+		$license = $_POST["license"];
+		$model = $_POST["model"];
 		
 		require_once 'dbh.inc.php';
 		require_once 'functions.inc.php';
+		#$username = getUname();
 		
-		header("location: ../profile-update.php?error=emptyinput"); #### comment this out later
-		exit();
 		
-		#loginUser($conn, $username, $password);
+		updateUser($conn,$username, $phone, $address, $license, $model);
+		
+		
+		
 	}
 	else{
-		header("location: ../login.php");
+		header("location: ../profile-update.php");
 		exit();
 	}
 
