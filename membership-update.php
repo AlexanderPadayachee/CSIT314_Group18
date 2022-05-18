@@ -87,6 +87,8 @@
 			<form action="includes/membership-update.inc.php" method="post">
 				<div class="container">
 					<?php
+						
+						
 						echo("<label for='memberType'><b>Membership Type</b></label>");
 						echo("<select name='memberType' required>");
 						echo("<option value = 'basic'>Basic Coverage</option>");

@@ -80,8 +80,6 @@
 		mysqli_stmt_close($stmt);
 	}
 	
-	
-	
 	function createUser($conn, $name, $username, $password, $phone, $dob){
 		$sql = "INSERT INTO customer (USERNAME, PASSWORD, CUS_NAME, DOB, PHONE) VALUES (?,?,?,?,?);";
 		
@@ -100,6 +98,11 @@
 		mysqli_stmt_close($stmt);
 		header("location: ../signup.php?error=none");
 		exit();
+		
+	}
+	
+	function getUname(){
+		return ($_SESSION["USERNAME"]);
 		
 	}
 	
@@ -127,7 +130,6 @@
 		
 	}
 	
-	
 	function emptyInputlogin($username, $password){
 		$result;
 		if(empty($username)|| empty($password)){
@@ -154,12 +156,15 @@
 		$resultDat = mysqli_stmt_get_result($stmt);
 		
 		if($row = mysqli_fetch_assoc($resultDat)){
-			
+			session_start();
 			$_SESSION["CAR_MODEL"] = $row["MODEL"];
+			return($row);
 			
 		}
 		else{
+			session_start();
 			$_SESSION["CAR_MODEL"] = "";
+			return(false);
 		}
 		
 		
@@ -184,18 +189,18 @@
 		$resultDat = mysqli_stmt_get_result($stmt);
 		
 		if($row = mysqli_fetch_assoc($resultDat)){
-			
 			$_SESSION["MEMBER_ID"] = $row["MEMBER_ID"];
 			$_SESSION["ANNUAL_FEE"] = $row["ANNUAL_FEE"];
 			$_SESSION["EXPIRY_DATE"] = $row["EXPIRY_DATE"];
 			$_SESSION["NUM_OF_USE"] = $row["NUM_OF_USE"];
-			
+			return($row);
 		}
 		else{
 			$_SESSION["MEMBER_ID"] = "";
 			$_SESSION["ANNUAL_FEE"] = "";
 			$_SESSION["EXPIRY_DATE"] = "";
 			$_SESSION["NUM_OF_USE"] = "";
+			return(false);
 		}
 		
 		
@@ -203,8 +208,7 @@
 		mysqli_stmt_close($stmt);
 		
 	}
-	
-	
+		
 	function loginUser($conn, $username, $password){
 		$uidExists = uidExists($conn, $username);
 		$profExists = profExists($conn, $username);
@@ -265,4 +269,53 @@
 			header("location: ../login.php?error=criticalError");
 			exit();
 		}
+	}
+	
+	function updateUser($conn, $username, $phone, $address, $license, $model){
+		$uidExists = uidExists($conn, $username);
+		$membership = MembershipCheck($conn, $username);
+		$carCheck = carCheck($conn, $username);
+		$member_id = $uidExists["MEMBER_ID"];
+		
+		if($uidExists === false){
+			header("location: ../profile-update.php?error=sqlFail");
+			exit();
+		}
+		
+		if(!$carCheck){
+			$sql = "INSERT INTO motor (MODEL, NUM_PLATE) VALUES (?,?);";
+			$stmt = mysqli_stmt_init($conn);
+			
+			if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../signup.php?error=sqlStatementFailed");
+			exit();
+			}
+			mysqli_stmt_bind_param($stmt, "ss", $model, $license);
+			mysqli_stmt_execute($stmt);
+			
+			mysqli_stmt_close($stmt);
+			
+		}
+		$sql = "UPDATE customer set PHONE = ?, ADDRESS = ?, MOTOR_NUM = ?, MEMBER_ID = ? WHERE USERNAME = '". $username ."';";
+		
+		$stmt = mysqli_stmt_init($conn);
+		
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../profile-update.php?error=sqlStatementFailed");
+			exit();
+		}
+		
+		mysqli_stmt_bind_param($stmt, "ssss", $phone, $address, $license, $member_id);
+		mysqli_stmt_execute($stmt);
+		
+		mysqli_stmt_close($stmt);
+		session_start();
+		$_SESSION["ADDRESS"] = $address;
+		$_SESSION["PHONE"] = $phone;
+		$_SESSION["MOTOR_NUM"] = $license;
+		$_SESSION["MODEL"] = $model;
+		
+		
+		header("location: ../index.php?error=none");
+		exit();		
 	}
