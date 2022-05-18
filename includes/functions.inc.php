@@ -212,9 +212,6 @@
 	function loginUser($conn, $username, $password){
 		$uidExists = uidExists($conn, $username);
 		$profExists = profExists($conn, $username);
-		
-		
-		
 		if($uidExists === false && $profExists === false){
 			header("location: ../login.php?error=wronglogin");
 			exit();
@@ -296,7 +293,7 @@
 			mysqli_stmt_close($stmt);
 			
 		}
-		$sql = "UPDATE customer set PHONE = ?, ADDRESS = ?, MOTOR_NUM = ?, MEMBER_ID = ? WHERE USERNAME = '". $username ."';";
+		$sql = "UPDATE customer SET PHONE = ?, ADDRESS = ?, MOTOR_NUM = ?, MEMBER_ID = ? WHERE USERNAME = '". $username ."';";
 		
 		$stmt = mysqli_stmt_init($conn);
 		
@@ -318,4 +315,76 @@
 		
 		header("location: ../index.php?error=none");
 		exit();		
+	}
+	
+	function updateMembeship($conn, $username, $memberType, $uses){
+		$uidExists = uidExists($conn, $username);
+		$membership = MembershipCheck($conn, $username);
+		$member_id = $uidExists["MEMBER_ID"];
+		$cost = 0;
+		$basic = 99;
+		$extended = 299;
+		$single = 50;
+		$zero = "0";
+		
+		if($memberType === 'basic'){
+			$sql="INSERT INTO membership (ANNUAL_FEE, EXPIRY_DATE, NUM_OF_USE) values (?,CURRENT_DATE(),?);";
+			$stmt = mysqli_stmt_init($conn);
+		
+			if(!mysqli_stmt_prepare($stmt, $sql)){
+				header("location: ../membership-update-update.php?error=sqlStatementFailed");
+				exit();
+			}
+			mysqli_stmt_bind_param($stmt, "ss", $basic, $zero);
+			mysqli_stmt_execute($stmt);
+			
+			mysqli_stmt_close($stmt);
+		}
+		elseif($memberType === 'extended'){
+			$sql="INSERT INTO membership (ANNUAL_FEE, EXPIRY_DATE, NUM_OF_USE) values (?,CURRENT_DATE(),?);";
+			$stmt = mysqli_stmt_init($conn);
+		
+			if(!mysqli_stmt_prepare($stmt, $sql)){
+				header("location: ../membership-update.php?error=sqlStatementFailed");
+				exit();
+			}
+			mysqli_stmt_bind_param($stmt, "ss", $extended, $zero);
+			mysqli_stmt_execute($stmt);
+			
+			mysqli_stmt_close($stmt);
+			
+		}
+		elseif($memberType === 'single'){
+			$sql="INSERT INTO membership (ANNUAL_FEE, EXPIRY_DATE, NUM_OF_USE) values (?,CURRENT_DATE(),?);";
+			$stmt = mysqli_stmt_init($conn);
+		
+			if(!mysqli_stmt_prepare($stmt, $sql)){
+				header("location: ../membership-update.php?error=sqlStatementFailed");
+				exit();
+			}
+			$blank = "";
+			$newUses = intval($uses) + intval($membership["NUM_OF_USE"]);
+			mysqli_stmt_bind_param($stmt, "ss", $blank, $newUses);
+			mysqli_stmt_execute($stmt);
+			
+			mysqli_stmt_close($stmt);
+			
+		}
+		$ID = mysqli_insert_id($conn);
+		
+		$sql = "UPDATE customer SET MEMBER_ID = '" . $ID . "' WHERE USERNAME = '" . $username . "';";
+		
+		$stmt = mysqli_stmt_init($conn);
+		
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../membership-update.php?error=sqlStatementFailed");
+			exit();
+		}
+		#mysqli_stmt_bind_param($stmt, "ss", $extended, $zero);
+		mysqli_stmt_execute($stmt);
+		
+		mysqli_stmt_close($stmt);
+		
+		$membership = MembershipCheck($conn, $username);
+		header("location: ../index.php?error=" . $ID . "");
 	}

@@ -16,6 +16,7 @@
 	
 ?>
 
+
 <body class="profileUpdate">
 	<section class="form">
 		<div class="image">
@@ -87,18 +88,18 @@
 			<form action="includes/membership-update.inc.php" method="post">
 				<div class="container">
 					<?php
-						
-						
-						echo("<label for='memberType'><b>Membership Type</b></label>");
-						echo("<select name='memberType' required>");
-						echo("<option value = 'basic'>Basic Coverage</option>");
-						echo("<option value = 'extended'>Extended Coverage</option>");
-						echo("<option value = 'extended'>Single Use</option>");	
-						echo("</select></br></br></br></br>");
-						
-						echo("<label for='uses'><b>Amount of uses you wish to buy</b></label>");
-						echo("<input type='text' name='uses' value='0' required>");
+						echo("<input readonly name='username' value = '" . $_SESSION["USERNAME"] . "'></br></br></br>");
 					?>
+					<label for='memberType'><b>Membership Type</b></label>
+					<select name='memberType' required>
+						<option value = 'basic'>Basic Coverage</option>
+						<option value = 'extended'>Extended Coverage</option>
+						<option value = 'single'>Single Use</option>
+					</select></br></br></br></br>
+					
+					<label for='uses'><b>Amount of uses you wish to buy</b></label>
+					<input type='text' name='uses' value='0' required>
+					
 				</div>
 				
 				
