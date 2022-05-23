@@ -1,4 +1,6 @@
 <?php
+	require_once 'dbh.inc.php';
+	require_once 'functions.inc.php';
 	if(isset($_POST["submit"])){
 		$name = $_POST["name"];
 		$username = $_POST["username"];
@@ -7,8 +9,7 @@
 		$phone = $_POST["phone"];
 		$dob = $_POST["dob"];
 		
-		require_once 'dbh.inc.php';
-		require_once 'functions.inc.php';
+
 		
 		if(emptyInputSignup($name, $username, $password, $pwdrepeat, $phone) !== false){
 			header("location: ../signup.php?error=emptyinput");
@@ -31,9 +32,6 @@
 			header("location: ../signup.php?error=usernameTaken");
 			exit();
 		}
-		
-		
-		
 		
 		createUser($conn, $name, $username, $password, $phone, $dob);
 		sleep(2);

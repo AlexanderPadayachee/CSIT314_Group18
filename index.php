@@ -1,7 +1,6 @@
 <?php
 	include_once 'header.php';
-	
-	
+	require_once 'includes/functions.inc.php';
 ?>
 	<head>
 		<title>Home Page</title>
@@ -16,13 +15,15 @@
 				header("location: prof-index.php");
 			}
 		};
+		genUsers(1);
 	?>
 	<meta http-equiv="refresh" content="=0;URL=index.php" />
 	<body class="main-page">
 		<div class="heading">
 			<h1>Welcome to #companyName#</h1>
 		</div>
-		<!--Content Section-->	
+		
+		<!--Content Section-->
 		<div class="content">
 			<div class="row">
 				<div class="column">
@@ -51,9 +52,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		
-	</body>
+		</div>	</body>
 	
 	
 <?php

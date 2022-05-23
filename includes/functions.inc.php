@@ -1,4 +1,5 @@
 <?php
+	require_once 'vendor/autoload.php';
 	function emptyInputSignup($name, $username, $password, $pwdrepeat, $phone){
 		$result;
 		if(empty($name) || empty($username)|| empty($password) || empty($pwdrepeat) || empty($phone)){
@@ -78,6 +79,20 @@
 			return $result;
 		}
 		mysqli_stmt_close($stmt);
+	}
+	
+	function genUsers($iter){
+		include 'dbh.inc.php';
+		$faker = Faker\Factory::create();
+		for($i = 0; $i < $iter; $i++){
+			$name = $faker->name();
+			$username = $faker->safeEmail();
+			$password = $faker->password();
+			$name = $faker->name();
+			$phone = intval(04).$faker->randomNumber(8, true);
+			$dob = $faker->dateTimeBetween('', '-15 years')->format('Y-m-d');
+			createUser($conn, $name, $username, $password, $phone, $dob);
+		}
 	}
 	
 	function createUser($conn, $name, $username, $password, $phone, $dob){
