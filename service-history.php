@@ -40,9 +40,8 @@
         <table class="service-history">
             <tr>
                 <th>SERVICE</th>
-                <th>PRICE</th>
+                <th>DESCRIPTION</th>
                 <th>CUSTOMER</th>
-                <th>PAID</th>
 				<th>LATITUDE</th>
 				<th>LONGITUDE</th>
             </tr>
@@ -55,15 +54,8 @@
             <tr>
                 <!--Displaying data for each row in each column-->
                 <td><?php echo $rows['SERVICE_NAME'];?></td>
-                <td><?php echo $rows['PRICE'];?></td>
+                <td><?php echo $rows['DESCRIPTION'];?></td>
                 <td><?php echo $rows['CUSTOMER_ID'];?></td>
-                <td><?php if ($rows['IS_PAID'] == 1) {
-						#If 1 is put in then that means the customer has paid
-						echo "Yes"; 
-					} else {
-						#If 0 is put in then customer has not yet paid
-						echo "No"; 
-					}?></td>
 				<td><?php echo $rows['LATITUDE'];?></td>
 				<td><?php echo $rows['LONGITUDE'];?></td>
             </tr>

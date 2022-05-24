@@ -494,7 +494,7 @@
 		return(1);
 	}
 	
-		function serviceTable($conn) {
+	function serviceTable($conn) {
 		#Get all service entries from specific professional
 		$sql = "SELECT * FROM service WHERE PROFESSIONAL_ID = ".$_SESSION["USER_ID"]."";
 		$result = $conn->query($sql);
@@ -512,8 +512,43 @@
 	
 	function reviewTable($conn) {
 		#Get all rating entries about professional
-		$sql = "SELECT review.RATING, review.COMMENCE FROM review INNER JOIN service ON review.SERVICE_ID = service.SERVICE_ID WHERE PROFESSIONAL_ID = ".$_SESSION["USER_ID"]."";
+		$sql = "SELECT review.RATING, review.COMMENCE FROM review INNER JOIN service ON review.SERVICE_ID = service.SERVICE_ID WHERE service.PROFESSIONAL_ID = ".$_SESSION["USER_ID"]."";
 		$result = $conn->query($sql);
 		#Return results
 		return $result;
 	}
+	
+	function assignProf($conn, $serviceID, $profID){
+		$sql = "UPDATE service SET PROFESSIONAL_ID = " . $profID . " where SERVICE_ID = " . $serviceID . ";";
+		
+		$stmt = mysqli_stmt_init($conn);
+		
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../service-request.php?error=sqlStatementFailed");
+			exit();
+		}
+		mysqli_stmt_execute($stmt);
+			
+		mysqli_stmt_close($stmt);
+		
+	}
+	
+	function finishService($conn, $serviceID){
+		$sql = "UPDATE service SET IS_FINISHED = 1 where SERVICE_ID = " . $serviceID . ";";
+		
+		$stmt = mysqli_stmt_init($conn);
+		
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../service-request.php?error=sqlStatementFailed");
+			exit();
+		}
+		mysqli_stmt_execute($stmt);
+			
+		mysqli_stmt_close($stmt);
+		
+	}
+	
+	
+	
+	
+	
