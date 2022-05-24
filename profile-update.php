@@ -8,8 +8,8 @@
 		require_once 'includes/dbh.inc.php';
 		require_once 'includes/functions.inc.php';
 		
-		MembershipCheck($conn, $_SESSION["USERNAME"]);
-		carCheck($conn, $_SESSION["USERNAME"]);
+		$memRow = MembershipCheck($conn, $_SESSION["USERNAME"]);
+		$carRow = carCheck($conn, $_SESSION["USERNAME"]);
 		
 	};
 ?>
@@ -52,20 +52,36 @@
 			<form action="includes/profile-update.inc.php" method="post">
 				<div class="container">
 					<?php
-					echo("<input readonly name='username' value = '" . $_SESSION["USERNAME"] . "'>");
+					echo("<input type = 'hidden' readonly name='username' value = '" . $_SESSION["USERNAME"] . "'></input>");
 					
 					echo("<label for='phone'><b>Phone Number</b></label>");
-					echo("<input type='text' name='phone' value='" . $_SESSION["PHONE"] . "' required>");
+					echo("<input type='text' name='phone' value='" . $_SESSION["PHONE"] . "' required></input>");
 					
 					if($_SESSION["TYPE"] === "CUSTOMER"){
 						echo("<label for='address'><b>Address</b></label>");
-						echo("<input type='text' name='address' value='" . $_SESSION["ADDRESS"] . "' required>");
-						
+						if(isset($_SESSION["ADDRESS"])){
+							echo("<input type='text' name='address' value='" . $_SESSION["ADDRESS"] . "' required></input>");
+						}
+						else{
+							echo("<input type='text' name='address' value='' required></input>");
+						}
 						echo("<label for='license'><b>License plate</b></label>");
-						echo("<input type='text' name='license' value='" . $_SESSION["LICENSE"] . "' required>");
+						if(isset($carRow["NUM_PLATE"])){
+							echo("<input type='text' name='license' value='" . $carRow["NUM_PLATE"] . "' required></input>");
+						}
+						else{
+							echo("<input type='text' name='license' value='' required></input>");
+						}
+						
 						
 						echo("<label for='model'><b>Car Model</b></label>");
-						echo("<input type='text' name='model' value='" . $_SESSION["MODEL"] . "' required>");
+						if(isset($carRow["MODEL"])){
+							echo("<input type='text' name='model' value='" . $carRow["MODEL"] . "' required> </input>");
+						}
+						else{
+							echo("<input type='text' name='model' value='' required> </input>");
+						}
+						
 					}
 					
 					
