@@ -1,6 +1,7 @@
 <?php
 	include_once 'header.php';
-	require_once 'includes/functions.inc.php';
+	
+	
 ?>
 	<head>
 		<title>Home Page</title>
@@ -15,15 +16,13 @@
 				header("location: prof-index.php");
 			}
 		};
-		genUsers(1);
 	?>
 	<meta http-equiv="refresh" content="=0;URL=index.php" />
 	<body class="main-page">
 		<div class="heading">
 			<h1>Welcome to #companyName#</h1>
 		</div>
-		
-		<!--Content Section-->
+		<!--Content Section-->	
 		<div class="content">
 			<div class="row">
 				<div class="column">
@@ -36,7 +35,7 @@
 					<div class="card-content">
 						<h4 class="card-title"><b>Make Service Request</b></h4>
 						<p>Make a service request to have our roadside assistants help you</p>
-						<button class="btnMngMem"> Check Now </button>
+						<a href = "service-request.php" class="forceLink"> Check Now </a>
 					</div>
 				</div>
 				<div class="column">
@@ -52,7 +51,9 @@
 					</div>
 				</div>
 			</div>
-		</div>	</body>
+		</div>
+		
+	</body>
 	
 	
 <?php

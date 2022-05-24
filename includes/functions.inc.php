@@ -1,5 +1,4 @@
 <?php
-	require_once 'vendor/autoload.php';
 	function emptyInputSignup($name, $username, $password, $pwdrepeat, $phone){
 		$result;
 		if(empty($name) || empty($username)|| empty($password) || empty($pwdrepeat) || empty($phone)){
@@ -57,6 +56,30 @@
 		mysqli_stmt_close($stmt);
 	}
 	
+	function profExistsByID($conn, $ID){
+		$sql = "SELECT * FROM professional WHERE USER_ID = ?;";
+		
+		$stmt = mysqli_stmt_init($conn);
+		
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../signup.php?error=sqlStatementFailed");
+		}
+		
+		mysqli_stmt_bind_param($stmt, "s", $ID);
+		mysqli_stmt_execute($stmt);
+		
+		$resultDat = mysqli_stmt_get_result($stmt);
+		
+		if($row = mysqli_fetch_assoc($resultDat)){
+			return $row;
+		}
+		else{
+			$result = false;
+			return $result;
+		}
+		mysqli_stmt_close($stmt);
+	}
+	
 	function uidExists($conn, $username){
 		$sql = "SELECT * FROM customer WHERE USERNAME = ?;";
 		
@@ -79,20 +102,6 @@
 			return $result;
 		}
 		mysqli_stmt_close($stmt);
-	}
-	
-	function genUsers($iter){
-		include 'dbh.inc.php';
-		$faker = Faker\Factory::create();
-		for($i = 0; $i < $iter; $i++){
-			$name = $faker->name();
-			$username = $faker->safeEmail();
-			$password = $faker->password();
-			$name = $faker->name();
-			$phone = intval(04).$faker->randomNumber(8, true);
-			$dob = $faker->dateTimeBetween('', '-15 years')->format('Y-m-d');
-			createUser($conn, $name, $username, $password, $phone, $dob);
-		}
 	}
 	
 	function createUser($conn, $name, $username, $password, $phone, $dob){
@@ -173,6 +182,7 @@
 		if($row = mysqli_fetch_assoc($resultDat)){
 			session_start();
 			$_SESSION["CAR_MODEL"] = $row["MODEL"];
+			$_SESSION["LICENSE"] = $row["NUM_PLATE"];
 			return($row);
 			
 		}
@@ -402,4 +412,108 @@
 		
 		$membership = MembershipCheck($conn, $username);
 		header("location: ../index.php?error=" . $ID . "");
+	}
+	
+	function createServiceRequest($conn, $username, $problem, $description, $lat, $long){
+		$uidExists = uidExists($conn, $username);
+		$CUSTOMER_ID = $uidExists["USER_ID"];
+		
+		$sql="INSERT INTO service (SERVICE_NAME, DESCRIPTION, PRICE, CUSTOMER_ID, PROFESSIONAL_ACCEPTED, IS_FINISHED, LATITUDE, LONGITUDE) 
+			values (?,?,0,?,False, FALSE, ?,?);";
+		$stmt = mysqli_stmt_init($conn);
+	
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../membership-update-update.php?error=sqlStatementFailed");
+			exit();
+		}
+		mysqli_stmt_bind_param($stmt, "sssss", $problem, $description, $CUSTOMER_ID, $lat, $long);
+		mysqli_stmt_execute($stmt);
+		
+		mysqli_stmt_close($stmt);
+		
+		$ID = mysqli_insert_id($conn);
+		return($ID);
+	}
+	
+	function checkService($conn, $username){
+		#$row = $uidExists($conn, $username)
+		#$UID = $row["USER_ID"]
+		
+		$sql = "SELECT * FROM customer JOIN service ON customer.USER_ID = service.CUSTOMER_ID WHERE USERNAME = '" . $username . "' AND IS_FINISHED = 0;";
+		
+		$stmt = mysqli_stmt_init($conn);
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../index.php?error=sqlStatementFailed");
+		}
+		
+		#mysqli_stmt_bind_param($stmt, "s", $username);
+		mysqli_stmt_execute($stmt);
+		
+		$resultDat = mysqli_stmt_get_result($stmt);
+		$row = mysqli_fetch_assoc($resultDat);
+		if (!empty($row)){
+			$_SESSION["SERVICE_ID"] = 1;
+			$_SESSION["LATITUDE"] = $row["LATITUDE"];
+			$_SESSION["LONGITUDE"] = $row["LONGITUDE"];
+			return(True);
+		}
+		else{
+			$_SESSION["SERVICE_ID"] = "";
+			return(False);
+		}
+	}
+	
+	function getServiceRow($conn, $username){
+		$sql = "SELECT * FROM customer JOIN service ON customer.USER_ID = service.CUSTOMER_ID WHERE USERNAME = '" . $username . "' AND IS_FINISHED = 0;";
+		
+		$stmt = mysqli_stmt_init($conn);
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../index.php?error=sqlStatementFailed");
+		}
+		
+		#mysqli_stmt_bind_param($stmt, "s", $username);
+		mysqli_stmt_execute($stmt);
+		
+		$resultDat = mysqli_stmt_get_result($stmt);
+		$row = mysqli_fetch_assoc($resultDat);
+		return($row);
+	}
+	
+	function cancelService($conn, $uid){
+		$sql = "UPDATE service SET IS_FINISHED = 1 WHERE SERVICE_ID = " . $uid . ";";
+		
+		$stmt = mysqli_stmt_init($conn);
+		
+		if(!mysqli_stmt_prepare($stmt, $sql)){
+			header("location: ../service-request.php?error=sqlStatementFailed");
+			exit();
+		}
+		mysqli_stmt_execute($stmt);
+			
+		mysqli_stmt_close($stmt);
+		return(1);
+	}
+	
+		function serviceTable($conn) {
+		#Get all service entries from specific professional
+		$sql = "SELECT * FROM service WHERE PROFESSIONAL_ID = ".$_SESSION["USER_ID"]."";
+		$result = $conn->query($sql);
+		#Return results
+		return $result; 
+	}
+	
+	function helpFinderTable($conn) {
+		#Get all service entries for people who need help
+		$sql = "SELECT * FROM service";
+		$result = $conn->query($sql);
+		#Return results
+		return $result;
+	}
+	
+	function reviewTable($conn) {
+		#Get all rating entries about professional
+		$sql = "SELECT review.RATING, review.COMMENCE FROM review INNER JOIN service ON review.SERVICE_ID = service.SERVICE_ID WHERE PROFESSIONAL_ID = ".$_SESSION["USER_ID"]."";
+		$result = $conn->query($sql);
+		#Return results
+		return $result;
 	}

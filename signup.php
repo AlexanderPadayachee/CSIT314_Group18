@@ -14,7 +14,7 @@
 		</div>
 		<div class="signup-box">
 			<h2>Customer Sign Up</h2></br>
-			Are you an industry professional? <a href = 'professional-signup.php'>Click here</a> to go to professional signup
+			Are you an industry proffessional? <a href = 'professional-signup.php'>Click here</a> to go to professional signup
 			<form action="includes/signup.inc.php" method="post">
 				<label for="name"><b>Full Name</b></label>
 				<input type="text" name="name" placeholder="Input full name" required></br>
@@ -59,6 +59,7 @@
 					};
 	
 				?>
+
 				<button class="btnSignup" type = "submit" name = "submit"> Sign Up </button>
 			</form>
 		</div>
