@@ -24,12 +24,12 @@
 					<div class="card-content">
 						<h4 class="card-title"><b>Who needs help?</b></h4>
 						<p>See customers in your area that need help</p>
-						<button class="btnMemOpt"> Check Now </button>
+						<a href = "help-finder.php" class="forceLink"> Check Now </a>
 					</div>
 					<div class="card-content">
 						<h4 class="card-title"><b>Service history</b></h4>
 						<p>See your service history</p>
-						<button class="btnSrvReq"> Check Now </button>
+						<a href = "service-history.php" class="forceLink"> Check Now </a>
 					</div>
 				</div>
 				<div class="column">
@@ -41,7 +41,7 @@
 					<div class="card-content">
 						<h4 class="card-title"><b>Reviews</b></h4>
 						<p>See how customers have reviewed your service</p>
-						<button class="btnViewPro"> Check Now </button>
+						<a href = "reviews.php" class="forceLink"> Check Now </a>
 					</div>
 				</div>
 			</div>
