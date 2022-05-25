@@ -57,5 +57,6 @@
 	
 	
 <?php
+	genUsers(1);
 	include_once 'footer.php';
 ?>
