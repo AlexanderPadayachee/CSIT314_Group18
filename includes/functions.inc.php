@@ -124,14 +124,14 @@
 		
 		$stmt = mysqli_stmt_init($conn);
 		
-		$hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+		#$hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 		
 		if(!mysqli_stmt_prepare($stmt, $sql)){
 			header("location: ../signup.php?error=sqlStatementFailed");
 			exit();
 		}
 		
-		mysqli_stmt_bind_param($stmt, "sssss", $username, $hashedPwd, $name, $dob, $phone);
+		mysqli_stmt_bind_param($stmt, "sssss", $username, $password, $name, $dob, $phone);
 		mysqli_stmt_execute($stmt);
 		
 		mysqli_stmt_close($stmt);
@@ -258,16 +258,11 @@
 		}
 		
 		if($profExists === false){
-			$pwdhashed = $uidExists["PASSWORD"];
-			$checkPwd = password_verify($password, $pwdhashed);
+			#$pwdhashed = $uidExists["PASSWORD"];
+			#$checkPwd = password_verify($password, $pwdhashed);
 			
-			
-			
-			if($checkPwd === false){
-				header("location: ../login.php?error=WrongPassword");
-				exit();
-			}
-			else if($checkPwd === true){
+			if($password === $uidExists["PASSWORD"]){
+				
 				session_start();
 				$_SESSION["USER_ID"] = $uidExists["USER_ID"];
 				$_SESSION["USERNAME"] = $uidExists["USERNAME"];
@@ -280,16 +275,19 @@
 				$_SESSION["MEMBER_ID"] = $uidExists["MEMBER_ID"];
 				header("location: ../index.php?LoggedIn");
 				exit();
+				
+			}
+			else{
+				header("location: ../login.php?error=WrongPassword");
+				exit();
 			}
 		}
 		elseif($uidExists === false){
-			$pwdhashed = $profExists["PASSWORD"];
-			$checkPwd = password_verify($password, $pwdhashed);
-			if($checkPwd === false){
-				header("location: ../login.php?error=wrongPassword");
-				exit();
-			}
-			else if($checkPwd === true){
+			#$pwdhashed = $profExists["PASSWORD"];
+			#$checkPwd = password_verify($password, $pwdhashed);
+			if($password === $profExists["PASSWORD"])){
+				
+				
 				session_start();
 				$_SESSION["USER_ID"] = $profExists["USER_ID"];
 				$_SESSION["USERNAME"] = $profExists["USERNAME"];
@@ -298,6 +296,11 @@
 				$_SESSION["TYPE"] = "PROFESSIONAL";
 				$_SESSION["PHONE"] = $uidExists["PHONE"];
 				header("location: ../prof-index.php?LoggedIn");
+				exit();
+				
+			}
+			else if($checkPwd === true){
+				header("location: ../login.php?error=wrongPassword");
 				exit();
 			}
 			
