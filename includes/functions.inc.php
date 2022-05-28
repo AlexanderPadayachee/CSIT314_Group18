@@ -285,7 +285,7 @@
 		elseif($uidExists === false){
 			#$pwdhashed = $profExists["PASSWORD"];
 			#$checkPwd = password_verify($password, $pwdhashed);
-			if($password === $profExists["PASSWORD"])){
+			if($password === $profExists["PASSWORD"]){
 				
 				
 				session_start();
