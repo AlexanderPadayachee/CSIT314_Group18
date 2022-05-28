@@ -16,11 +16,6 @@
 				<img src="../img/car-icon.png" class="logo-img" />
 				<span class="company-name">Company Name</span>
 			</div>
-			<?php
-				if(isset($_SESSION["USER_ID"])){
-					echo"<p class = headerBar>User: " . $_SESSION["NAME"] . "</p>";
-				};
-			?>
 			<nav>
 				<div class = "wrapper">
 						<a href = "index.php">Home</a>
@@ -30,6 +25,7 @@
 								echo"<a href = 'membership-update.php'>  Update Membership  </a></li>";
 								echo"<a href = 'service-request.php'>  Request Service  </a></li>";
 								echo"<a href = 'includes/logout.inc.php'>  Log out  </a></li>";
+								echo"<a class = headerBar>User: " . $_SESSION["NAME"] . "</a>";
 							}
 							else{ 
 								echo"<a href = 'signup.php'>Sign Up</a></li>";
@@ -43,3 +39,4 @@
 				</div>
 			</nav>
 		</header>
+	</body>

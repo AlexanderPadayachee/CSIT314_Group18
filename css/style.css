@@ -109,12 +109,14 @@ button[type=submit]{
     height: 170px;
     margin: 5px 20px 20px 20px;
     padding: 5px;
+    border-radius: 10px;
 	
 }
 .card-content a{
 	color: #696969 !important;
 
 }
+
 .row{
     display: flex;
     flex-wrap: wrap;
@@ -139,6 +141,7 @@ button[type=submit]{
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
+    border-radius: 10px;
 }
 
 

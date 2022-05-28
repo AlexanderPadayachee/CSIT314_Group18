@@ -16,7 +16,9 @@
 	
 ?>
 
-
+<head>
+<link rel="stylesheet" href="css\profile.css">
+</head>
 <body class="profileUpdate">
 	<section class="form">
 		<div class="image">
@@ -28,7 +30,8 @@
 			
 			<table class = "profileTable">
 				<tr>
-					<td>Full Name: </td>
+					<td>Full Name </td>
+					<td>:</td>
 					<td>
 					<?php 
 					echo($_SESSION["NAME"]);
@@ -36,7 +39,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>email: </td>
+					<td>Email </td>
+					<td>:</td>
 					<td>
 					<?php 
 					echo($_SESSION["USERNAME"]);
@@ -44,7 +48,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>DOB: </td>
+					<td>DOB </td>
+					<td>:</td>
 					<td>
 					<?php 
 					echo($_SESSION["DOB"]);
@@ -52,7 +57,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Insurance Member Number: </td>
+					<td>Insurance Member Number </td>
+					<td>:</td>
 					<td>
 					<?php 
 					echo($_SESSION["MEMBER_ID"]);
@@ -60,7 +66,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Current Annual Fee: </td>
+					<td>Current Annual Fee </td>
+					<td>:</td>
 					<td>
 					<?php 
 					echo($_SESSION["ANNUAL_FEE"]);
@@ -68,7 +75,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Expiry Date: </td>
+					<td>Expiry Date </td>
+					<td>:</td>
 					<td>
 					<?php 
 					echo($_SESSION["EXPIRY_DATE"]);
@@ -76,7 +84,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Number of Uses: </td>
+					<td>Number of Uses </td>
+					<td>:</td>
 					<td>
 					<?php 
 					echo($_SESSION["NUM_OF_USE"]);
@@ -87,6 +96,7 @@
 			
 			<form action="includes/membership-update.inc.php" method="post">
 				<div class="container">
+					<label>Username</label>
 					<?php
 						echo("<input readonly name='username' value = '" . $_SESSION["USERNAME"] . "'></br></br></br>");
 					?>

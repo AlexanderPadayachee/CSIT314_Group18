@@ -7,6 +7,7 @@
 <!--  put HTML/PHP code here -->
 <meta http-equiv="refresh" content="=0;" />
 <body class="main-page">
+	<h1>Membership Option</h1>
 	<div class="content">
 		<div class="row">
 			<div class="column">
